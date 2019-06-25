@@ -237,7 +237,7 @@ $db_ini = parse_ini_file("db.ini");
 if (isset($_POST["username"]) && isset($_POST["pswd"])){
   $username=check_input($_POST["username"]);
   $pswd=check_input($_POST["pswd"]);
-  echo $username;
+  // echo $username;
     $con = mysqli_connect($db_ini["host"], $db_ini["username"], $db_ini["password"], $db_ini["database"]);
     // if($con){echo "connected";}
     $sqlCommand = "SELECT * FROM cx_userinfo WHERE Email='".mysqli_real_escape_string($con, $username)."' OR Phone='".mysqli_real_escape_string($con, $username)."'";

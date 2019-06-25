@@ -58,20 +58,12 @@ $db_ini = parse_ini_file("db.ini");
                             </div>
                             <div class="col-4 form-group">
                                 <label class="mb-0">State</label>
-                                <select name="stateName" class="form-control">
-                                    <option>Delhi</option>
-                                    <option>Haryana</option>
-                                    <option>UP</option>
-                                      
+                                <select name="stateName" class="form-control" id="state" onchange="getCity()">
                                 </select>
                             </div>
                             <div class="col-4 form-group">
                                 <label class="mb-0">City</label>
-                                <select name="cityName" class="form-control">
-                                    <option>Pitampura</option>
-                                    <option>Rohini</option>
-                                    <option>Dwarka</option>
-                                      
+                                <select name="cityName" class="form-control" id="city">
                                 </select>
                             </div>
                               <div class="col-4 form-group">
@@ -162,6 +154,7 @@ $db_ini = parse_ini_file("db.ini");
         </div>
     </div>
     <script>
+      getStates();
       function passwordError(){
         alert("Error:- Password does not match.");
         return false;
@@ -187,6 +180,48 @@ $db_ini = parse_ini_file("db.ini");
           setTimeout(show_modal, 3000);
         }
 
+      function getStates(){ 
+        if (window.XMLHttpRequest) {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+        } else { // code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function() {
+          if (this.readyState==4 && this.status==200) {
+          var a=0;
+          var options="";
+          while(a<JSON.parse(this.responseText).length){
+              options+='<option>'+JSON.parse(this.responseText)[a].region+'</option>';
+              a++;
+            }
+          document.getElementById("state").innerHTML = options
+          }
+        }
+        xmlhttp.open("GET","http://battuta.medunes.net/api/region/in/all/?key=e093106686ea761cb6c47042f8287ae2",true); //+str
+        xmlhttp.send();
+      }
+      function getCity(){ 
+        if (window.XMLHttpRequest) {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+        } else { // code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function() {
+          if (this.readyState==4 && this.status==200) {
+          var a=0;
+          var options="";
+          while(a<JSON.parse(this.responseText).length){
+              options+='<option>'+JSON.parse(this.responseText)[a].city+'</option>';
+              a++;
+            }
+          document.getElementById("city").innerHTML = options
+          }
+        }
+        xmlhttp.open("GET","http://geo-battuta.net/api/city/in/search/?region="+document.getElementById("state").value+"&key=e093106686ea761cb6c47042f8287ae2",true); //+str
+        xmlhttp.send();
+      }
     </script>
   <?php
 
@@ -337,6 +372,7 @@ if (isset($_POST["client_name"]) && isset($_POST["client_email"]) && isset($_POS
             "City" => mysqli_real_escape_string($con, $cityName),
             "Pin Code" => mysqli_real_escape_string($con, $_POST['PinCode']),
             "Designation" => mysqli_real_escape_string($con, $_POST['Designation']),
+            "Live" => true,
         );
         $json = json_creator($jsonArray);
         // echo $json;
@@ -359,10 +395,21 @@ if (isset($_POST["client_name"]) && isset($_POST["client_email"]) && isset($_POS
           $_SESSION['Email'] = $client_email;
           $_SESSION['Phone'] = $client_phone;
           $_SESSION['RID'] = $RID;
-          if (!headers_sent()) {
-          header("Location: index.php");
-          exit();
-        }
+          if (!is_dir('restaurants/'.$restaurantName."==>".$client_name)) {
+            mkdir('restaurants/'.$restaurantName."==>".$client_name, 0777, true);
+            chmod('restaurants/'.$restaurantName."==>".$client_name, 0777);
+          }
+          else{
+            echo '<div id="error_Modal" class="modal" data-keyboard="true">',
+          '<!-- Modal content -->',
+          '<div class="modal-content" style="color: green;">',
+          '<span class="close">&times;</span>',
+          '<center><p><span>You have successfully registered with us.<span><br><strong>Thank you for being a part of hungerrr...</center></strong><br></p><center>NOTE:- Could not create image directory for this account. Please report this to admin.</center>',
+          '</div>',
+          '<script type="text/javascript">',
+          'modal(page="index.php");',
+          '</script>';
+          }
         }
       }
   // Check connection
