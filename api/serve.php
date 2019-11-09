@@ -5,10 +5,10 @@ try{
 	if($_SERVER["REQUEST_METHOD"])
 	{
 		if($_REQUEST["Key"]=="565656"){
-		switch ($method_name) 
-		{
-		  case 'GET':
-		  
+			switch ($method_name) 
+			{
+			  case 'GET':
+			  
 	  		  	if($_GET["q"]){
 	  		  		$qry="SELECT ".mysqli_real_escape_string($conn, $_GET["q"])." from client_userinfo";
 	  				$result=mysqli_query($conn, $qry);
@@ -62,93 +62,93 @@ try{
 	  				break;
 	  			}
 
-		  case 'PUT':
-			if($_REQUEST["Data"]&&$_REQUEST["ID"]){
-		  		$qry="UPDATE client_userinfo SET Data='".mysqli_real_escape_string($conn, $_REQUEST["Data"])."', Timestamp=DEFAULT where Restaurant_ID='".mysqli_real_escape_string($conn, $_REQUEST["ID"])."' ";
-				if(mysqli_query($conn, $qry))
-				{
-					$data=array("status"=>"1","message"=>"success","result"=>"Data Updated successfully");
-				}
-				else{
-					$data=array("status"=>"0","message"=>"Failed","result"=>"Something went wrong please report this to developer!!!");
-				}
-				break;
-		  	}
-		  	else if($_REQUEST["Phone"]&&$_REQUEST["ID"]){
-		  		$qry="UPDATE client_userinfo SET Phone='".mysqli_real_escape_string($conn, $_REQUEST["Phone"])."', Timestamp=DEFAULT where Restaurant_ID='".mysqli_real_escape_string($conn, $_REQUEST["ID"])."' ";
-				if(mysqli_query($conn, $qry))
-				{
-					$data=array("status"=>"1","message"=>"success","result"=>"Phone Number Updated successfully");
-				}
-				else{
-					$data=array("status"=>"0","message"=>"Failed","result"=>"Something went wrong please report this to developer!!!");
-				}
-				break;
-		  	}
-		  	else if($_REQUEST["Email"]&&$_REQUEST["ID"]){
-		  		$qry="UPDATE client_userinfo SET Email='".mysqli_real_escape_string($conn, $_REQUEST["Email"])."', Timestamp=DEFAULT where Restaurant_ID='".mysqli_real_escape_string($conn, $_REQUEST["ID"])."' ";
-				if(mysqli_query($conn, $qry))
-				{
-					$data=array("status"=>"1","message"=>"success","result"=>"Email Address Updated successfully");
-				}
-				else{
-					$data=array("status"=>"0","message"=>"success","result"=>"Something went wrong please report this to developer!!!");
-				}
-				break;
-		  	}
-		  	else{
-					$data=array("status"=>"0","message"=>"Failed","result"=>"Invalid parameters passed!!!");
-				}
-				break;
+			  case 'PUT':
+				if($_REQUEST["Data"]&&$_REQUEST["ID"]){
+			  		$qry="UPDATE client_userinfo SET Data='".mysqli_real_escape_string($conn, $_REQUEST["Data"])."', Timestamp=DEFAULT where Restaurant_ID='".mysqli_real_escape_string($conn, $_REQUEST["ID"])."' ";
+					if(mysqli_query($conn, $qry))
+					{
+						$data=array("status"=>"1","message"=>"success","result"=>"Data Updated successfully");
+					}
+					else{
+						$data=array("status"=>"0","message"=>"Failed","result"=>"Something went wrong please report this to developer!!!");
+					}
+					break;
+			  	}
+			  	else if($_REQUEST["Phone"]&&$_REQUEST["ID"]){
+			  		$qry="UPDATE client_userinfo SET Phone='".mysqli_real_escape_string($conn, $_REQUEST["Phone"])."', Timestamp=DEFAULT where Restaurant_ID='".mysqli_real_escape_string($conn, $_REQUEST["ID"])."' ";
+					if(mysqli_query($conn, $qry))
+					{
+						$data=array("status"=>"1","message"=>"success","result"=>"Phone Number Updated successfully");
+					}
+					else{
+						$data=array("status"=>"0","message"=>"Failed","result"=>"Something went wrong please report this to developer!!!");
+					}
+					break;
+			  	}
+			  	else if($_REQUEST["Email"]&&$_REQUEST["ID"]){
+			  		$qry="UPDATE client_userinfo SET Email='".mysqli_real_escape_string($conn, $_REQUEST["Email"])."', Timestamp=DEFAULT where Restaurant_ID='".mysqli_real_escape_string($conn, $_REQUEST["ID"])."' ";
+					if(mysqli_query($conn, $qry))
+					{
+						$data=array("status"=>"1","message"=>"success","result"=>"Email Address Updated successfully");
+					}
+					else{
+						$data=array("status"=>"0","message"=>"success","result"=>"Something went wrong please report this to developer!!!");
+					}
+					break;
+			  	}
+			  	else{
+						$data=array("status"=>"0","message"=>"Failed","result"=>"Invalid parameters passed!!!");
+					}
+					break;
 
-		 //  case 'DELETE':
-			// $id=$_REQUEST['product_id'];
-			// $qry="delete from product where product_id='".$id."'";
-			// if(mysqli_query($conn, $qry))
-			// {
-			// 	$data=array("status"=>"1","message"=>"success","result"=>"Product Update successfully");
-			// }
-			// else{
-			// 	$data=array("status"=>"1","message"=>"success","result"=>"Something is wrong!!!");
-			// }
-			// break;
-		}
-		echo json_encode($data);
-		}
-	else if($_REQUEST["Key"]=="gallery565656"){
-		$qry="SELECT `Name`, `Restaurant Name`, `Data` from client_userinfo";
-		$result=mysqli_query($conn, $qry);
-		$temp_list=array();
-		$temp_cat[]=array();
-		$counter=0;
-		while ($row=mysqli_fetch_row($result))
-		{	
-			$counter++;
-			foreach ($row as $key => $value) {
-				if($key==0){
-					$temp_cat["Name"] =  $row[0];
-				}
-				else if($key==1){
-					$temp_cat["Restaurant Name"] =  $row[1];
-				}
-				else if($key==2){
-					$temp_cat["City"] =  json_decode($row[2], true)["City"];
-					$temp_cat["State"] =  json_decode($row[2], true)["State"];
-					$temp_cat["Live"] =  json_decode($row[2], true)["Live"];
-				}
+			 //  case 'DELETE':
+				// $id=$_REQUEST['product_id'];
+				// $qry="delete from product where product_id='".$id."'";
+				// if(mysqli_query($conn, $qry))
+				// {
+				// 	$data=array("status"=>"1","message"=>"success","result"=>"Product Update successfully");
+				// }
+				// else{
+				// 	$data=array("status"=>"1","message"=>"success","result"=>"Something is wrong!!!");
+				// }
+				// break;
 			}
-			$temp_list[] = $temp_cat;
-			$temp_cat=[];		
-		}
-		$data=array("status"=>"1","message"=>"success","result"=>$temp_list);
-		if($_REQUEST["Log"]=="True"){
 			echo json_encode($data);
 		}
-		getRestaurantListWeb($temp_list);
-	}
-	else{
-	  		$data=array("status"=>"0","message"=>"Failed","result"=>"You are not authorized.");
-  			echo json_encode($data);
+		else if($_REQUEST["Key"]=="gallery565656"){
+			$qry="SELECT `Name`, `Restaurant Name`, `Data` from client_userinfo";
+			$result=mysqli_query($conn, $qry);
+			$temp_list=array();
+			$temp_cat[]=array();
+			$counter=0;
+			while ($row=mysqli_fetch_row($result))
+			{	
+				$counter++;
+				foreach ($row as $key => $value) {
+					if($key==0){
+						$temp_cat["Name"] =  $row[0];
+					}
+					else if($key==1){
+						$temp_cat["Restaurant Name"] =  $row[1];
+					}
+					else if($key==2){
+						$temp_cat["City"] =  json_decode($row[2], true)["City"];
+						$temp_cat["State"] =  json_decode($row[2], true)["State"];
+						$temp_cat["Live"] =  json_decode($row[2], true)["Live"];
+					}
+				}
+				$temp_list[] = $temp_cat;
+				$temp_cat=[];		
+			}
+			$data=array("status"=>"1","message"=>"success","result"=>$temp_list);
+			if($_REQUEST["Log"]=="True"){
+				echo json_encode($data);
+			}
+			getRestaurantListWeb($temp_list);
+		}
+		else{
+		  		$data=array("status"=>"0","message"=>"Failed","result"=>"You are not authorized.");
+	  			echo json_encode($data);
 	  	}
 	}
 	else{

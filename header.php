@@ -343,7 +343,7 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["phone"]) &&
       if (is_null($result) && is_null($result2)){
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
         // echo "Available";
-        $sqlCommand = "INSERT INTO cx_userinfo VALUES(DEFAULT,'".mysqli_real_escape_string($con, $name)."','".mysqli_real_escape_string($con, $email)."','".mysqli_real_escape_string($con, $phone)."','".mysqli_real_escape_string($con, $hashed_password)."',DEFAULT)";
+        $sqlCommand = "INSERT INTO cx_userinfo VALUES(DEFAULT,'".mysqli_real_escape_string($con, $name)."','".mysqli_real_escape_string($con, $email)."','".mysqli_real_escape_string($con, $phone)."','".mysqli_real_escape_string($con, $hashed_password)."',DEFAULT,DEFAULT)";
         // echo $sqlCommand;
         $query=mysqli_query($con,$sqlCommand);
         // echo $query; 
