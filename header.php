@@ -307,8 +307,8 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["phone"]) &&
     $name=check_input($_POST["name"]);
     $email=check_input($_POST["email"]);
     $phone=check_input($_POST["phone"]);
-    $password=check_input($_POST["password"]);
-    $cnfpassword=check_input($_POST["cnfpassword"]);
+    $password=trim($_POST["password"]);
+    $cnfpassword=trim($_POST["cnfpassword"]);
       $con = mysqli_connect($db_ini["host"], $db_ini["username"], $db_ini["password"], $db_ini["database"]);
       $sqlCommand = "SELECT * FROM cx_userinfo WHERE Email='".mysqli_real_escape_string($con, $email)."'";
       $query=mysqli_query($con,$sqlCommand);

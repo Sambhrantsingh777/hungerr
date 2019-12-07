@@ -308,8 +308,8 @@ if (isset($_POST["client_name"]) && isset($_POST["client_email"]) && isset($_POS
     $client_name=check_input($_POST["client_name"]);
     $client_email=check_input($_POST["client_email"]);
     $client_phone=check_input($_POST["client_phone"]);
-    $client_password=check_input($_POST["client_password"]);
-    $client_confirmed_password=check_input($_POST["client_confirmed_password"]);
+    $client_password=trim($_POST["client_password"]);
+    $client_confirmed_password=trim($_POST["client_confirmed_password"]);
     $restaurantName=check_input($_POST["restaurantName"]);
     $Address=check_input($_POST["Address"]);
     $stateName=check_input($_POST["stateName"]);
