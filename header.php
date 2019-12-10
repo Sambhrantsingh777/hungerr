@@ -243,7 +243,7 @@ if (isset($_POST["username"]) && isset($_POST["pswd"])){
     $sqlCommand = "SELECT * FROM cx_userinfo WHERE Email='".mysqli_real_escape_string($con, $username)."' OR Phone='".mysqli_real_escape_string($con, $username)."'";
     $query=mysqli_query($con,$sqlCommand);
     $result = mysqli_fetch_assoc($query);
-    if (password_verify($_POST['pswd'], $result['Password']))
+    if (hash('sha256',$_POST['pswd'])== $result['Password'])
     {
     $_SESSION['Name'] = $result['Name'];
     $_SESSION['Email'] = $result['Email'];
@@ -341,7 +341,7 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["phone"]) &&
       '</script>';
       }
       if (is_null($result) && is_null($result2)){
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $hashed_password = hash('sha256', $password);
         // echo "Available";
         $sqlCommand = "INSERT INTO cx_userinfo VALUES(DEFAULT,'".mysqli_real_escape_string($con, $name)."','".mysqli_real_escape_string($con, $email)."','".mysqli_real_escape_string($con, $phone)."','".mysqli_real_escape_string($con, $hashed_password)."',DEFAULT,DEFAULT)";
         // echo $sqlCommand;

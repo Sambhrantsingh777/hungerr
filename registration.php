@@ -251,7 +251,7 @@ if (isset($_POST["client_username"]) && isset($_POST["client_pswd"])){
     $sqlCommand = "SELECT * FROM client_userinfo WHERE Restaurant_ID='".mysqli_real_escape_string($con, $client_username)."' OR Phone='".mysqli_real_escape_string($con, $client_username)."' OR Email='".mysqli_real_escape_string($con, $client_username)."'";
     $query=mysqli_query($con,$sqlCommand);
     $result = mysqli_fetch_assoc($query);
-    if (password_verify($_POST['client_pswd'], $result['Password']))
+    if (hash('sha256',$client_password)== $result['Password'])
     {
     $_SESSION['Name'] = $result['Name'];
     $_SESSION['Email'] = $result['Email'];
@@ -363,7 +363,7 @@ if (isset($_POST["client_name"]) && isset($_POST["client_email"]) && isset($_POS
     }
     #####################################
       if (is_null($result) && is_null($result2)){
-        $hashed_password = password_hash($client_password, PASSWORD_BCRYPT);
+        $hashed_password = hash('sha256',$client_password);
         // echo "Available";
         $adrs = str_replace("\r", " ",  $Address);
         $jsonArray = array(

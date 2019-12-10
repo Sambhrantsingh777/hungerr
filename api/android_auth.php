@@ -11,11 +11,11 @@ try{
 		if($_REQUEST["Key"]=="android565656"){
 			if(isset($_REQUEST["username"])&&isset($_REQUEST["password"])){
 				$username = trim($_REQUEST["username"]);
-				$password = trim($_REQUEST["password"]);
+				$password = hash('sha256',trim($_REQUEST["password"]));
 				$qry="SELECT `Name` from `cx_userinfo` WHERE (`Email`='$username' OR `Phone`='$username') AND `Password`='$password'";
 				$result=mysqli_query($conn, $qry);
-				if(mysql_num_rows($result)>0){
-					while ($row=mysqli_fetch_row($result))
+				if(mysqli_num_rows($result)>0){
+					while ($row=mysqli_fetch_assoc($result))
 	  				{
 	  					$name = $row['Name'];
 	  				}
@@ -28,7 +28,7 @@ try{
 				$name = check_input($_REQUEST['name']);
 				$email = check_input($_REQUEST['email']);
 				$phone = check_input($_REQUEST['phone']);
-				$hashed_password = password_hash(trim($_REQUEST['pwd']), PASSWORD_BCRYPT);
+				$hashed_password = hash('sha256',trim($_REQUEST['pwd']));
 		        $sqlCommand = "INSERT INTO `cx_userinfo` VALUES(DEFAULT,'".mysqli_real_escape_string($conn, $name)."','".mysqli_real_escape_string($conn, $email)."','".mysqli_real_escape_string($conn, $phone)."','".mysqli_real_escape_string($conn, $hashed_password)."',DEFAULT,DEFAULT)";
 		        // echo $sqlCommand;
 		        $query=mysqli_query($conn,$sqlCommand);
@@ -43,10 +43,10 @@ try{
 		else if($_REQUEST["Key"]=="android565656:client"){
 			if(isset($_REQUEST["username"])&&isset($_REQUEST["password"])){
 				$username = trim($_REQUEST["username"]);
-				$password = trim($_REQUEST["password"]);
+				$password = hash('sha256',trim($_REQUEST["password"]));
 				$qry="SELECT `Name` from `cx_userinfo` WHERE (`Email`='$username' OR `Phone`='$username') AND `Password`='$password'";
 				$result=mysqli_query($conn, $qry);
-				if(mysql_num_rows($result)>0){
+				if(mysqli_num_rows($result)>0){
 					while ($row=mysqli_fetch_row($result))
 	  				{
 	  					$name = $row['Name'];
@@ -62,7 +62,7 @@ try{
 				$email = check_input($_REQUEST['email']);
 				$phone = check_input($_REQUEST['phone']);
 				$$restaurantName = check_input($_REQUEST['restaurant_name']);
-				$client_password = trim($_REQUEST['pwd']);
+				$client_password = hash('sha256',trim($_REQUEST['pwd']));
 
 				$sqlCommand = "SELECT * FROM client_userinfo WHERE Email='".mysqli_real_escape_string($con, $client_email)."'";
 				$query=mysqli_query($con,$sqlCommand);
