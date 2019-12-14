@@ -12,14 +12,15 @@ try{
 			if(isset($_REQUEST["username"])&&isset($_REQUEST["password"])){
 				$username = trim($_REQUEST["username"]);
 				$password = hash('sha256',trim($_REQUEST["password"]));
-				$qry="SELECT `Name` from `cx_userinfo` WHERE (`Email`='$username' OR `Phone`='$username') AND `Password`='$password'";
+				$qry="SELECT `Name`,`Email` from `cx_userinfo` WHERE (`Email`='$username' OR `Phone`='$username') AND `Password`='$password'";
 				$result=mysqli_query($conn, $qry);
 				if(mysqli_num_rows($result)>0){
 					while ($row=mysqli_fetch_assoc($result))
 	  				{
 	  					$name = $row['Name'];
+	  					$email = $row['Email'];
 	  				}
-					$data=array("status"=>"1","message"=>"Success","user"=>$name);
+					$data=array("status"=>"1","message"=>"Success","user"=>$name,"email"=>$email);
 				}
 				else
 					$data=array("status"=>"0","message"=>"Failed","reason"=>"Username/Password does not match.");
