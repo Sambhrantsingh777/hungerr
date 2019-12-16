@@ -30,10 +30,25 @@ try{
 				$email = check_input($_REQUEST['email']);
 				$phone = check_input($_REQUEST['phone']);
 				$hashed_password = hash('sha256',trim($_REQUEST['pwd']));
-		        $sqlCommand = "INSERT INTO `cx_userinfo` VALUES(DEFAULT,'".mysqli_real_escape_string($conn, $name)."','".mysqli_real_escape_string($conn, $email)."','".mysqli_real_escape_string($conn, $phone)."','".mysqli_real_escape_string($conn, $hashed_password)."',DEFAULT,DEFAULT)";
-		        // echo $sqlCommand;
-		        $query=mysqli_query($conn,$sqlCommand);
-		        $data=array("status"=>"1","message"=>"Success","details"=>"Sucessfully registered new user:-".$name);
+
+				$qry="SELECT `Name` from `cx_userinfo` WHERE (`Email`='$email'";
+				$result=mysqli_query($conn, $qry);
+				if(mysqli_num_rows($result)>0){
+					$data=array("status"=>"2","message"=>"Phone number already exists.","user"=>$name,"email"=>$email);
+				}
+
+				$qry2="SELECT `Name` from `cx_userinfo` WHERE (`Phone`='$phone'";
+				$result2=mysqli_query($conn, $qry2);
+				if(mysqli_num_rows($result2)>0){
+					$data=array("status"=>"3","message"=>"E-mail already exists.","user"=>$name,"phone"=>$phone);
+				}
+				else{
+			        $sqlCommand = "INSERT INTO `cx_userinfo` VALUES(DEFAULT,'".mysqli_real_escape_string($conn, $name)."','".mysqli_real_escape_string($conn, $email)."','".mysqli_real_escape_string($conn, $phone)."','".mysqli_real_escape_string($conn, $hashed_password)."',DEFAULT,DEFAULT)";
+			        // echo $sqlCommand;
+			        $query=mysqli_query($conn,$sqlCommand);
+			        $data=array("status"=>"1","message"=>"Success","details"=>"Sucessfully registered new user:-".$name, ,"user"=>$name,"email"=>$email);
+				}
+
 			}
 			else{
 				$data=array("status"=>"0","message"=>"Failed","reason"=>"Invalid Params passed.");
