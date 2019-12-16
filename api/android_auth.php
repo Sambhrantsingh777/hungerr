@@ -47,7 +47,7 @@ try{
 			        $sqlCommand = "INSERT INTO `cx_userinfo` VALUES(DEFAULT,'".mysqli_real_escape_string($conn, $name)."','".mysqli_real_escape_string($conn, $email)."','".mysqli_real_escape_string($conn, $phone)."','".mysqli_real_escape_string($conn, $hashed_password)."',DEFAULT,DEFAULT)";
 			        // echo $sqlCommand;
 			        $query=mysqli_query($conn,$sqlCommand);
-			        $data=array("status"=>"1","message"=>"Success","details"=>"Sucessfully registered new user:-".$name, ,"user"=>$name,"email"=>$email);
+			        $data=array("status"=>"1","message"=>"Success","details"=>"Sucessfully registered new user:-".$name,"user"=>$name,"email"=>$email);
 				}
 
 			}
