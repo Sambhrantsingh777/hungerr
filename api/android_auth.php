@@ -33,13 +33,14 @@ try{
 
 				$qry="SELECT `Name` from `cx_userinfo` WHERE (`Email`='$email'";
 				$result=mysqli_query($conn, $qry);
-				if(mysqli_num_rows($result)>0){
-					$data=array("status"=>"2","message"=>"Phone number already exists.","user"=>$name,"email"=>$email);
-				}
 
 				$qry2="SELECT `Name` from `cx_userinfo` WHERE (`Phone`='$phone'";
 				$result2=mysqli_query($conn, $qry2);
-				if(mysqli_num_rows($result2)>0){
+
+				if(mysqli_num_rows($result)>0){
+					$data=array("status"=>"2","message"=>"Phone number already exists.","user"=>$name,"email"=>$email);
+				}
+				elseif(mysqli_num_rows($result2)>0){
 					$data=array("status"=>"3","message"=>"E-mail already exists.","user"=>$name,"phone"=>$phone);
 				}
 				else{
