@@ -38,10 +38,10 @@ try{
 				$result2=mysqli_query($conn, $qry2);
 
 				if(mysqli_num_rows($result)>0){
-					$data=array("status"=>"2","message"=>"Phone number already exists.","user"=>$name,"email"=>$email);
+					$data=array("status"=>"2","message"=>"E-mail already exists.","user"=>$name,"email"=>$email);
 				}
 				elseif(mysqli_num_rows($result2)>0){
-					$data=array("status"=>"3","message"=>"E-mail already exists.","user"=>$name,"phone"=>$phone);
+					$data=array("status"=>"3","message"=>"Phone number already exists.","user"=>$name,"phone"=>$phone);
 				}
 				else{
 			        $sqlCommand = "INSERT INTO `cx_userinfo` VALUES(DEFAULT,'".mysqli_real_escape_string($conn, $name)."','".mysqli_real_escape_string($conn, $email)."','".mysqli_real_escape_string($conn, $phone)."','".mysqli_real_escape_string($conn, $hashed_password)."',DEFAULT,DEFAULT)";
