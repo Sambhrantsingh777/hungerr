@@ -31,10 +31,10 @@ try{
 				$phone = check_input($_REQUEST['phone']);
 				$hashed_password = hash('sha256',trim($_REQUEST['pwd']));
 
-				$qry="SELECT `Name` from `cx_userinfo` WHERE (`Email`='$email'";
+				$qry="SELECT `Name` from `cx_userinfo` WHERE `Email`='$email'";
 				$result=mysqli_query($conn, $qry);
 
-				$qry2="SELECT `Name` from `cx_userinfo` WHERE (`Phone`='$phone'";
+				$qry2="SELECT `Name` from `cx_userinfo` WHERE `Phone`='$phone'";
 				$result2=mysqli_query($conn, $qry2);
 
 				if(mysqli_num_rows($result)>0){
